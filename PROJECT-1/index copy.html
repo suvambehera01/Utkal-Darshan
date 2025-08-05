@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Explore Destinations</title>
+    <script src="https://kit.fontawesome.com/6f63f9b9c6.js" crossorigin="anonymous"></script>
+    <style>
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f8f8f8;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Header Top Section */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 25px 40px 10px;
+        flex-wrap: wrap;
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        border: 2px solid #c6a6fd;
+        border-radius: 50px;
+        padding: 10px 20px;
+        max-width: 600px;
+        flex: 1;
+      }
+
+      .search-bar input {
+        border: none;
+        outline: none;
+        flex: 1;
+        font-size: 16px;
+        background: transparent;
+        color: #444;
+      }
+
+      .search-bar i {
+        color: #6c47ff;
+        margin-right: 10px;
+      }
+
+      .dropdowns {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .dropdowns .dropdown {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+      }
+
+      .dropdowns .dropdown label {
+        font-size: 12px;
+        color: #555;
+        margin-bottom: 4px;
+      }
+
+      .dropdowns select {
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: 1px solid #aaa;
+        font-size: 14px;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 20px 0 10px;
+        font-size: 2.5rem;
+        color: #1e3d59;
+      }
+
+      p.subtitle {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #555;
+      }
+
+      .explore-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px 40px;
+      }
+
+      .card {
+        width: 100%;
+        height: 360px;
+        perspective: 1000px;
+      }
+
+      .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        
+      }
+
+      .card:hover .card-inner {
+        
+        height: 102%;
+        width: 102%;
+      }
+
+      .card-front, .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        backface-visibility: hidden;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .card-front {
+        background-color: #fff;
+      }
+
+      .card-front img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .card-content {
+        padding: 15px;
+      }
+
+      .card-content h3 {
+        color: #1e3d59;
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+      }
+
+      .card-content p {
+        color: #555;
+        font-size: 0.95rem;
+      }
+
+      .card-back {
+        background: linear-gradient(to right, #4e54c8, #8f94fb);
+        color: #fff;
+        transform: rotateY(180deg);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .card-back h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .card-back p {
+        font-size: 0.95rem;
+      }
+
+      .cross-icon {
+        position: absolute;
+        top: 42%;
+        left: 44%;
+        font-size: 24px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 8px;
+        border-radius: 50%;
+        opacity: 0;
+        animation: blink 1s infinite;
+        transition: opacity 0.3s ease;
+      }
+
+      .card:hover .cross-icon {
+        opacity: 1;
+      }
+
+      @keyframes blink {
+        0% { opacity: 0.3; }
+        50% { opacity: 1; }
+        100% { opacity: 0.3; }
+      }
+
+      @media screen and (max-width: 768px) {
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+        }
+
+        .explore-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .explore-container {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ✅ Cleaned Top Bar -->
+    <div class="topbar">
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Where do you want to go?" />
+      </div>
+      <div class="dropdowns">
+        <div class="dropdown">
+          <label>Language</label>
+          <select>
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="fr">French</option>
+          </select>
+        </div>
+        <!-- extra icon you canm added inside the right  -->
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h1>Explore Destinations</h1>
+    <p class="subtitle">Discover amazing places to plan your next trip</p>
+
+    <!-- Cards -->
+    <div class="explore-container">
+      <!-- Khandhar Waterfall -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy.png"alt="Khandhar Waterfall">
+            <div class="card-content">
+              <h3>Khandhar Waterfall</h3>
+              <p>Khandhar Waterfall is a stunning 244m (801ft). It is the second-highest waterfall in the state.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sanaghagara Waterfall -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image.png" alt="Sanaghagara Waterfall">
+            <div class="card-content">
+              <h3>Sanaghagara Waterfall</h3>
+              <p>It is 30.5m(100 ft) high perennial waterfall known for its-tiered plunge into a scenic forest-surrounded pool.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rani Duduma Waterfall -->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 2.png" alt="Rani Duduma Waterfall">
+            <div class="card-content">
+              <h3>Rani Duduma Waterfall</h3>
+              <p>"Where the queen of cascades whispers through the forest-Rani Duduma,Koraput's hidden gem."</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barehipani Waterfall -->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 3.png" alt="Barehipani Waterfall">
+            <div class="card-content">
+              <h3>Barehipani Waterfall</h3>
+              <p>It nearly 399m in two dramatic tiers along the Bhudhabalanga River. </p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>
+
+
+ <!-- Handi Bhanga Waterfall -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 4.png" alt="Handi Bhanga Waterfall">
+            <div class="card-content">
+              <h3>Handi Bhanga Waterfall</h3>
+              <p>This Waterfall is falling from 30m height and the most spectacular one in the Mayurbhanja district.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Devkund Waterfall -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 6.png" alt="Devkund Waterfall">
+            <div class="card-content">
+              <h3>Devkund Waterfall</h3>
+              <p>Devkund is also known as the "bathing pond of Gods" .The waterfall descends from a height of about 50 feet.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Joranda Waterfall -->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 5.png" alt="Joranda Waterfall">
+            <div class="card-content">
+              <h3>Joranda Waterfall</h3>
+              <p>Approximately 150 meters(492 feet) and it known for its beauty and the misty atmosphere it creates.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pradhanpat Waterfall -->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 7.png" alt="Pradhanpat Waterfall">
+            <div class="card-content">
+              <h3>Pradhanpat Waterfall</h3>
+              <p>Height: ~9–15 m; nestled amidst hills and dense forest, it served as the site for one of the earliest hydroelectric plants in Asia .</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>
+
+       <!-- Mankadadian Waterfall -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 8.png" alt="Mankadadian Waterfall">
+            <div class="card-content">
+              <h3>Mankadadian Waterfall</h3>
+              <p>Approximately 64–75 km from Paralakhemundi, near R. Udayagiri—reachable via a trek along forest streams .Cascades from about a 100 ft (30 m) .
+
+              </p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bhairaghumar Waterfall -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 9.png" alt="Bhairaghumar Waterfall">
+            <div class="card-content">
+              <h3>Bhairaghumar Waterfall</h3>
+              <p>Height 150 ft (45 m), one of the highest in the Nabarangpur district.Crystal-clear pools perfect for bathing; rich wildlife along the trail .</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dabarkhola Waterfall -->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 10.png" alt="Dabarkhola Waterfall">
+            <div class="card-content">
+              <h3>Dabarkhola Waterfall</h3>
+              <p>Located near Badamba, about 90 km from Cuttack and 20 km from Badamba .Comprises two cascades—a smaller one and a larger fall (~200 ft height for the bigger one).</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deojhar Waterfall -->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 11.png" alt="Deojhar Waterfall">
+            <div class="card-content">
+              <h3>Deojhar Waterfall</h3>
+              <p>A hidden gem nestled in Talapunji village.It cascades roughly 30–40 ft from a hillside of the Eastern Ghats into a tranquil pool.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>
+
+       <!-- Phurlijharan (Phularijharan) Waterfall -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 12.png" alt="Phurlijharan (Phularijharan) Waterfall">
+            <div class="card-content">
+              <h3>Phurlijharan (Phularijharan) Waterfall</h3>
+              <p>A perennial 15–16 m(50 ft) cascade on the Sagada river, about 15 km from Bhawanipatna.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ashokjhar Waterfall  -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 13.png" alt="Ashokjhar Waterfall ">
+            <div class="card-content">
+              <h3>Ashokjhar Waterfall </h3>
+              <p>Named after the Ashoka tree from which it originates.Located in Sukinda block, Jajpur district, Odisha.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gundichaghai Waterfall -->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 14.png" alt="Gundichaghai Waterfall">
+            <div class="card-content">
+              <h3>Gundichaghai Waterfall</h3>
+              <p>Falls ~50 ft over rocky ledges of the Musala River, dividing into 3+ streams, creating a “smoky” mist and “silver garland” effect.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ekagudi Waterfal -->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 15.png" alt="Ekagudi Waterfal">
+            <div class="card-content">
+              <h3>Ekagudi Waterfal</h3>
+              <p>Height Approximately 200 feet, tallest waterfall in Malkangiri</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>
+
+       <!-- Asurkhol Waterfall -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 16.png" alt="Asurkhol Waterfall">
+            <div class="card-content">
+              <h3>Asurkhol Waterfall</h3>
+              <p>The waterfall descends from a height of about 15 feet, creating a misty and captivating atmosphere.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ramjodi Waterfall -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 17.png" alt="Ramjodi Waterfall">
+            <div class="card-content">
+              <h3>Ramjodi Waterfall</h3>
+              <p>Height approximately 46 meters (150 feet).Involves a 3–4 km jungle trek from the road to reach it.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badalgiri Waterfall -->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 18.png" alt="Badalgiri Waterfall">
+            <div class="card-content">
+              <h3>Badalgiri Waterfall</h3>
+              <p>Tier & Height A scenic two-tiered waterfall (also referred to as a “twin waterfall”), with each drop around 30–40 feet (≈9–12 m) in height.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gandahati Waterfall  -->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 19.png" alt="Gandahati Waterfall ">
+            <div class="card-content">
+              <h3>Gandahati Waterfall </h3>
+              <p>A single-tier fall with a height of ~20 meters (≈60–100 ft), offering a calm, shallow pool at its base .With seasonal wildlife like elephants, deer, and various bird species.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>  
+
+    </div>
+
+  </body>
+  </html

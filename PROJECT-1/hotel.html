@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Odisha Hotel Booking</title>
+<!-- Bootstrap CSS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+    background-size: cover;
+    color: #222;
+  }
+  .container {
+    margin-top: 40px;
+    max-width: 1100px;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .search-bar input, .search-bar select {
+    height: 45px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding-left: 12px;
+    font-size: 16px;
+  }
+  .search-bar button {
+    height: 45px;
+    border-radius: 8px;
+    background-color: #0077cc;
+    border: none;
+    color: white;
+    font-weight: 600;
+  }
+  .search-bar button:hover {
+    background-color: #005fa3;
+  }
+  .features {
+    margin-top: 40px;
+    text-align: center;
+  }
+  .features .feature-item {
+    padding: 0 20px;
+  }
+  .features .feature-item h5 {
+    font-weight: 700;
+    margin-top: 10px;
+  }
+  .features .feature-item p {
+    color: #555;
+  }
+  .hotel-cards {
+    margin-top: 50px;
+  }
+  .hotel-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgb(0 0 0 / 0.12);
+    transition: transform 0.3s ease;
+    background: white;
+  }
+  .hotel-card:hover {
+    transform: scale(1.04);
+  }
+  .hotel-card img {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    height: 180px;
+    object-fit: cover;
+    width: 100%;
+  }
+  .hotel-info {
+    padding: 15px 20px;
+  }
+  .hotel-info h6 {
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .rating {
+    color: white;
+    background-color: #28a745;
+    border-radius: 12px;
+    padding: 3px 8px;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .price {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 6px;
+    color: #0077cc;
+  }
+  .btn-book {
+    background-color: #0077cc;
+    border: none;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 10px;
+    color: white;
+    margin-top: 12px;
+  }
+  .btn-book:hover {
+    background-color: #005fa3;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Heading -->
+  <div class="text-center mb-4">
+    <h2>Book Your Perfect Stay in Odisha</h2>
+    <p>Compare hotels across Odisha districts and get the best deals</p>
+  </div>
+
+<!-- Search Bar -->
+<form class="row g-3 search-bar" autocomplete="off" onsubmit="return false;">
+  <div class="col-md-4 position-relative">
+    <input type="text" class="form-control" id="cityHotelInput" placeholder="Enter city or hotel" required autocomplete="off"/>
+    <!-- Suggestion/Dropdown container -->
+    <div id="suggestion-box" class="list-group position-absolute w-100" style="z-index:2000; display:none; max-height:220px; overflow-y:auto;"></div>
+  </div>
+  <div class="col-md-2 d-grid">
+    <button type="submit">Search</button>
+  </div>
+</form>
+
+<script>
+  // Static list for demo; populate as required
+  const citiesHotels = [
+    'Bhubaneswar',
+    'Balasore',
+    'Berhampur',
+    'Baripada',
+    'Puri',
+    'Cuttack',
+    'Trident Hotel Bhubaneswar',
+    'Mayfair Lagoon Bhubaneswar',
+    'Swosti Premium Bhubaneswar',
+    'Sambalpur',
+    'Rourkela',
+    'Jharsuguda'
+    // ... add more
+  ];
+  
+  const input = document.getElementById('cityHotelInput');
+  const suggestionBox = document.getElementById('suggestion-box');
+
+  input.addEventListener('input', function() {
+    const value = this.value.trim().toLowerCase();
+    suggestionBox.innerHTML = '';
+    if (value.length === 0) {
+      suggestionBox.style.display = 'none';
+      return;
+    }
+    const matches = citiesHotels.filter(item => item.toLowerCase().startsWith(value));
+    if (matches.length === 0) {
+      suggestionBox.style.display = 'none';
+      return;
+    }
+    matches.forEach(match => {
+      const div = document.createElement('div');
+      div.classList.add('list-group-item', 'list-group-item-action');
+      div.textContent = match;
+      div.style.cursor = 'pointer';
+      div.onclick = function() {
+        input.value = match;
+        suggestionBox.style.display = 'none';
+      };
+      suggestionBox.appendChild(div);
+    });
+    suggestionBox.style.display = 'block';
+  });
+
+  // Hide suggestion box if clicked outside
+  document.addEventListener('click', function(e) {
+    if (!input.contains(e.target) && !suggestionBox.contains(e.target)) {
+      suggestionBox.style.display = 'none';
+    }
+  });
+
+  // (Optional) Use up/down arrows + Enter
+  let selectedIndex = -1;
+  input.addEventListener('keydown', function(e) {
+    const items = suggestionBox.querySelectorAll('.list-group-item');
+    if (suggestionBox.style.display === 'block' && items.length > 0) {
+      if (e.key === 'ArrowDown') {
+        selectedIndex = (selectedIndex + 1) % items.length;
+        items.forEach((item, idx) => item.classList.toggle('active', idx === selectedIndex));
+        e.preventDefault();
+      } else if (e.key === 'ArrowUp') {
+        selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+        items.forEach((item, idx) => item.classList.toggle('active', idx === selectedIndex));
+        e.preventDefault();
+      } else if (e.key === 'Enter') {
+        if (selectedIndex >= 0) {
+          input.value = items[selectedIndex].textContent;
+          suggestionBox.style.display = 'none';
+          selectedIndex = -1;
+          e.preventDefault();
+        }
+      }
+    }
+  });
+
+  input.addEventListener('blur', function() {
+    setTimeout(() => suggestionBox.style.display = 'none', 100); // Delay for click to register
+    selectedIndex = -1;
+  });
+</script>
+
+
+  <!-- Features -->
+  <div class="row features mt-5">
+    <div class="col-md-4 feature-item">
+      <img src="https://img.icons8.com/ios-filled/64/000000/search.png" alt="search" />
+      <h5>Search simply</h5>
+      <p>Easily search through hotels in Odisha</p>
+    </div>
+    <div class="col-md-4 feature-item">
+      <img src="https://img.icons8.com/ios-filled/64/000000/combo-chart--v1.png" alt="compare" />
+      <h5>Compare confidently</h5>
+      <p>Compare prices across multiple platforms</p>
+    </div>
+    <div class="col-md-4 feature-item">
+      <img src="https://img.icons8.com/ios-filled/64/000000/discount.png" alt="save" />
+      <h5>Save big</h5>
+      <p>Get exclusive deals and discounts</p>
+    </div>
+  </div>
+
+  <!-- Hotel Deals -->
+  <h3 class="mt-5 mb-3">Top Hotels in Odisha</h3>
+  <div class="row hotel-cards g-4">
+    <!-- Hotel 1 -->
+    <div class="col-md-4">
+      <div class="hotel-card">
+        <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/592545406.jpg?k=7afdbc4bad3f58c9fd711865eca6112f3fe97d6d028d137fcf33715649dc441f&o=&hp=1" alt="Mayfair Lagoon, Bhubaneswar" />
+        <div class="hotel-info">
+          <h6>Mayfair Lagoon, Bhubaneswar</h6>
+          <div class="rating">8.9</div>
+          <div>Price: ₹4,500 / night</div>
+          <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Mayfair Lagoon, Bhubaneswar" data-price="₹4,500">Book Now</button>
+        </div>
+      </div>
+    </div>
+    <!-- Hotel 2 -->
+    <div class="col-md-4">
+      <div class="hotel-card">
+        <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_599,h_337,r_0/q_80,w_900,h_506,dpr_1,f_auto,fl_progressive,c_limit/swosti-revamp-premium-bhubaneswar/bhubaneshwar_socsrr" alt="Swosti Premium, Bhubaneswar" />
+        <div class="hotel-info">
+          <h6>Swosti Premium, Bhubaneswar</h6>
+          <div class="rating">9.1</div>
+          <div>Price: ₹5,200 / night</div>
+          <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Swosti Premium, Bhubaneswar" data-price="₹5,200">Book Now</button>
+        </div>
+      </div>
+    </div>
+    <!-- Hotel 3 -->
+    <div class="col-md-4">
+      <div class="hotel-card">
+        <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/210929691.jpg?k=bb9ef5e2746333c574e72f83ddb68e4843c86cfb5f4385775f9386b9db469646&o=&hp=1" alt="Trident Hotel Bhubaneswar" />
+        <div class="hotel-info">
+          <h6>Trident Hotel Bhubaneswar</h6>
+          <div class="rating">8.7</div>
+          <div>Price: ₹3,800 / night</div>
+          <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Trident Hotel Bhubaneswar" data-price="₹3,800">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row hotel-cards g-4 mt-4">
+
+  <!-- Hotel 1 -->
+  <div class="col-md-4">
+    <div class="hotel-card">
+      <img src="https://images.t2online.in/cdn-cgi/image/width=1280,quality=70/https://apis.t2online.in/image/journal/article.jpg?img_id=1362589&t=1741155426074" alt="Mayfair Lagoon, Bhubaneswar" />
+      <div class="hotel-info">
+        <h6>"Taj Puri Resort </h6>
+        <div class="rating">8.9</div>
+        <div>Price: ₹4,500 / night</div>
+        <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Taj Puri Resort"  data-price="₹4,500">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel 2 -->
+  <div class="col-md-4">
+    <div class="hotel-card">
+      <img src="https://pix10.agoda.net/hotelImages/339456/0/2a60fe0596f45e83eb80ad29950c0098.jpeg?ce=0&s=1024x768" alt="Hotel Konark" />
+      <div class="hotel-info">
+        <h6>Hotel Konark, Puri</h6>
+        <div class="rating">9.1</div>
+        <div>Price: ₹5,200 / night</div>
+        <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Hotel Konark, Puri" data-price="₹5,200">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel 3 -->
+  <div class="col-md-4">
+    <div class="hotel-card">
+      <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/a7/ca/e3/empires-hotel-bhubaneswar.jpg?w=900&h=500&s=1" alt="Empires 
+      Hotel, Bhubaneswar" />
+      <div class="hotel-info">
+        <h6>Empires 
+      Hotel, Bhubaneswar</h6>
+        <div class="rating">8.7</div>
+        <div>Price: ₹3,800 / night</div>
+        <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Empires 
+      Hotel, Bhubaneswar" data-price="₹3,800">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel 4 -->
+  <div class="col-md-4">
+    <div class="hotel-card">
+      <img src="https://gos3.ibcdn.com/2d34ffc4380311edb8f40a58a9feac02.jpg " alt="Hotel Niladri, Balasore" />
+      <div class="hotel-info">
+        <h6>Hotel Niladri, Balasore</h6>
+        <div class="rating">8.5</div>
+        <div>Price: ₹4,200 / night</div>
+        <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Hotel Niladri, Balasore" data-price="₹4,200">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel 5 -->
+  <div class="col-md-4">
+    <div class="hotel-card">
+      <img src="https://gos3.ibcdn.com/efa1dad2401411ed92df0a58a9feac02.jpg" alt="Imperial-Inn,Koraput" />
+      <div class="hotel-info">
+        <h6>Imperial-Inn,Koraput</h6>
+        <div class="rating">8.2</div>
+        <div>Price: ₹3,000 / night</div>
+        <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Imperial-Inn,Koraput" data-price="₹3,000">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel 6 -->
+  <div class="col-md-4">
+    <div class="hotel-card">
+      <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/2e/c7/ec/best-4-star-property.jpg?w=1200&h=-1&s=1" alt="Hotel Jasmin Palace" />
+      <div class="hotel-info">
+        <h6>Hotel Jasmin Palace</h6>
+        <div class="rating">7.9</div>
+        <div>Price: ₹2,800 / night</div>
+        <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Hotel Jasmin Palace" data-price="₹2,800">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel 7 -->
+  <div class="col-md-4">
+    <div class="hotel-card">
+      <img src="https://gos3.ibcdn.com/5874e2c2-55fc-4988-acbe-a8ab5ab83aa5.JPG" alt="River Inn, Sambalpur" />
+      <div class="hotel-info">
+        <h6>River Inn ,Sambalpur</h6>
+        <div class="rating">8.3</div>
+        <div>Price: ₹2,900 / night</div>
+        <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="River Inn ,Sambalpur" data-price="₹2,900">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel 8 -->
+  <div class="col-md-4">
+    <div class="hotel-card">
+      <img src="https://pix10.agoda.net/hotelImages/303258/-1/2702e5e96dda3df87daa6014d6591544.jpg?ca=0&ce=1&s=702x392" alt="Mayfair, Rourkela" />
+      <div class="hotel-info">
+        <h6>Mayfair, Rourkela</h6>
+        <div class="rating">7.8</div>
+        <div>Price: ₹3,100 / night</div>
+        <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Mayfair, Rourkela" data-price="₹3,100">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel 9 -->
+  <div class="col-md-4">
+    <div class="hotel-card">
+      <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/249454124.jpg?k=51cf79cc811316b554c915fe4700ec0bfef859dceb5cfba9aef54a57233265df&o=&hp=1" alt="Hotel Celebration ,Balangir" />
+      <div class="hotel-info">
+        <h6>Hotel Celebration ,Balangir</h6>
+        <div class="rating">8.1</div>
+        <div>Price: ₹2,700 / night</div>
+        <button class="btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal" data-hotel="Hotel Celebration ,Balangir" data-price="₹2,700">Book Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Booking Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="bookingForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookingModalLabel">Book Your Stay</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="hotelInfo" class="fw-bold mb-3"></p>
+        <div class="mb-3">
+          <label for="guestName" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="guestName" required />
+        </div>
+        <div class="mb-3">
+          <label for="guestEmail" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="guestEmail" required />
+        </div>
+        <div class="mb-3">
+          <label for="guestPhone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="guestPhone" pattern="[0-9]{10}" placeholder="10 digit phone" required />
+        </div>
+        <div class="mb-3">
+          <label for="guestGuests" class="form-label">Number of Guests</label>
+          <input type="number" class="form-control" id="guestGuests" min="1" max="20" required />
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="checkInDate" class="form-label">Check-in Date</label>
+            <input type="date" class="form-control" id="checkInDate" required />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="checkOutDate" class="form-label">Check-out Date</label>
+            <input type="date" class="form-control" id="checkOutDate" required />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- (Duplicate script and contact section removed) -->
+
+
+<footer class="site-footer">
+  <div class="container"><div class="row"><div class="col-lg-4 mb-4 mb-lg-0"><h5>About Odisha Planner</h5><p>Your ultimate guide to exploring the rich culture, heritage, and stunning landscapes of Odisha.</p></div><div class="col-lg-2 col-md-6 mb-4 mb-lg-0"><h5>Quick Links</h5><ul class="list-unstyled"><li><a href="#">Home</a></li><li><a href="#booking-section">Hotels</a></li><li><a href="#">Destinations</a></li><li><a href="#contact-section">Contact</a></li></ul></div><div class="col-lg-3 col-md-6 mb-4 mb-lg-0"><h5>Contact Info</h5><ul class="list-unstyled"><li><i class="fas fa-map-marker-alt me-2"></i>Bhubaneswar, Odisha</li><li><i class="fas fa-envelope me-2"></i>info@odishaplanner.com</li><li><i class="fas fa-phone me-2"></i>+91 123 456 7890</li></ul></div><div class="col-lg-3"><h5>Follow Us</h5><a href="#" class="me-3"><i class="fab fa-facebook fa-2x"></i></a><a href="#" class="me-3"><i class="fab fa-twitter fa-2x"></i></a><a href="#" class="me-3"><i class="fab fa-instagram fa-2x"></i></a></div></div><div class="footer-bottom">&copy; 2025 Odisha Travel Planner. All Rights Reserved.</div></div>
+</footer>
+
+
+<!-- Bootstrap JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const bookingModal = document.getElementById('bookingModal');
+  const hotelInfo = document.getElementById('hotelInfo');
+  const bookingForm = document.getElementById('bookingForm');
+
+  bookingModal.addEventListener('show.bs.modal', event => {
+    const button = event.relatedTarget;
+    hotelInfo.textContent = `Booking at: ${button.getAttribute('data-hotel')} (Price per night: ${button.getAttribute('data-price')})`;
+    bookingForm.reset();
+  });
+
+  bookingForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const data = {
+      fullName: bookingForm.guestName.value,
+      emailAddress: bookingForm.guestEmail.value,
+      phoneNumber: bookingForm.guestPhone.value,
+      numberOfGuests: parseInt(bookingForm.guestGuests.value),
+      checkInDate: bookingForm.checkInDate.value,
+      checkOutDate: bookingForm.checkOutDate.value
+    };
+
+    if (data.checkOutDate <= data.checkInDate) {
+      alert('Check-out date must be after check-in date.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8081/api/hotel-booking/submit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      const result = await response.text();
+      if(response.ok) {
+        alert('Thank you ' + data.fullName + '!\nYour booking is confirmed.\nDetails:\nCheck-in: ' + data.checkInDate + '\nCheck-out: ' + data.checkOutDate + '\nGuests: ' + data.numberOfGuests);
+        bookingForm.reset();
+        const modal = bootstrap.Modal.getInstance(bookingModal);
+        modal.hide();
+      } else {
+        alert('Booking failed: ' + result);
+      }
+    } catch(err) {
+      alert('Error: ' + err.message);
+    }
+  });
+</script>
+
+<section class="contact-section" id="contact-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2>Get In Touch</h2>
+        <p class="lead mb-4">Have questions? Send us a message.</p>
+        <form id="contactForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <input type="text" class="form-control" id="userName" placeholder="Your Name" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <input type="email" class="form-control" id="userEmail" placeholder="Your Email" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" rows="5" id="userMessage" placeholder="Your Message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="background-color: #673ab7; border:none; padding: 12px 30px;">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Custom Modal -->
+  <div id="custom-modal" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.18); z-index:9999;">
+    <div style="background:white; max-width: 400px; margin: 80px auto; padding:22px 30px 18px 30px; border-radius:8px; box-shadow:0 8px 32px rgba(0,0,0,0.16); position:relative; text-align:left; font-size:16px;">
+      <div id="modal-message"></div>
+      <div style="text-align:right; margin-top:20px;">
+        <button id="modal-ok" style="background:#096d6b; color:white; padding:6px 26px; border-radius:8px; border:none; font-size:16px;">OK</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const form = document.getElementById('contactForm');
+    const modal = document.getElementById('custom-modal');
+    const modalMsg = document.getElementById('modal-message');
+    const okBtn = document.getElementById('modal-ok');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Values from user (customize as per your use-case)
+      var name = document.getElementById('userName').value;
+      var email = document.getElementById('userEmail').value;
+      var message = document.getElementById('userMessage').value;
+
+      // Build custom message
+      modalMsg.innerHTML = 
+        `<b>Thank you ${name ? name : 'User'}!</b><br>
+        Your message has been received.<br><br>
+        <b>Details:</b><br>
+        Name: ${name}<br>
+        Email: ${email}<br>
+        Message: ${message}`;
+
+      modal.style.display = 'block';
+      form.reset();
+    });
+    okBtn.onclick = function() {
+      modal.style.display = 'none';
+    };
+    // Optional: modal click-outside to close
+    window.onclick = function(event) {
+      if(event.target == modal) modal.style.display='none';
+    }
+  </script>
+</section>
+
+</body>
+</html>

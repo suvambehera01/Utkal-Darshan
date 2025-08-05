@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Explore Destinations</title>
+    <script src="https://kit.fontawesome.com/6f63f9b9c6.js" crossorigin="anonymous"></script>
+    <style>
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f8f8f8;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Header Top Section */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 25px 40px 10px;
+        flex-wrap: wrap;
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        border: 2px solid #c6a6fd;
+        border-radius: 50px;
+        padding: 10px 20px;
+        max-width: 600px;
+        flex: 1;
+      }
+
+      .search-bar input {
+        border: none;
+        outline: none;
+        flex: 1;
+        font-size: 16px;
+        background: transparent;
+        color: #444;
+      }
+
+      .search-bar i {
+        color: #6c47ff;
+        margin-right: 10px;
+      }
+
+      .dropdowns {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .dropdowns .dropdown {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+      }
+
+      .dropdowns .dropdown label {
+        font-size: 12px;
+        color: #555;
+        margin-bottom: 4px;
+      }
+
+      .dropdowns select {
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: 1px solid #aaa;
+        font-size: 14px;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 20px 0 10px;
+        font-size: 2.5rem;
+        color: #1e3d59;
+      }
+
+      p.subtitle {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #555;
+      }
+
+      .explore-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px 40px;
+      }
+
+      .card {
+        width: 100%;
+        height: 360px;
+        perspective: 1000px;
+      }
+
+      .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+
+      /* .card:hover .card-inner {
+        transform: rotateY(180deg);
+      } */
+
+      .card-front, .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        backface-visibility: hidden;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .card-front {
+        background-color: #fff;
+      }
+
+      .card-front img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .card-content {
+        padding: 15px;
+      }
+
+      .card-content h3 {
+        color: #1e3d59;
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+      }
+
+      .card-content p {
+        color: #555;
+        font-size: 0.95rem;
+      }
+
+      .card-back {
+        background: linear-gradient(to right, #4e54c8, #8f94fb);
+        color: #fff;
+        transform: rotateY(180deg);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .card-back h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .card-back p {
+        font-size: 0.95rem;
+      }
+
+      .cross-icon {
+        position: absolute;
+        top: 42%;
+        left: 44%;
+        font-size: 24px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 8px;
+        border-radius: 50%;
+        opacity: 0;
+        animation: blink 1s infinite;
+        transition: opacity 0.3s ease;
+      }
+
+      .card:hover .cross-icon {
+        opacity: 1;
+      }
+
+      @keyframes blink {
+        0% { opacity: 0.3; }
+        50% { opacity: 1; }
+        100% { opacity: 0.3; }
+      }
+
+      @media screen and (max-width: 768px) {
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+        }
+
+        .explore-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .explore-container {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ✅ Cleaned Top Bar -->
+    <div class="topbar">
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Where do you want to go?" />
+      </div>
+      <div class="dropdowns">
+        <div class="dropdown">
+          <label>Language</label>
+          <select>
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="fr">French</option>
+          </select>
+        </div>
+        <!-- extra icon you canm added inside the right  -->
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h1>Explore Destinations</h1>
+    <p class="subtitle">Discover amazing places to plan your next trip</p>
+
+    <!-- Cards -->
+    <div class="explore-container">
+      <!-- Dhauli Shanti Stupa -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image.png" alt=" Dhauli Shanti Stupa">
+            <div class="card-content">
+              <h3>Dhauli Shanti Stupa</h3>
+              <p>Famous for Kalinga War (261 BCE).King Ashoka Converted to Buddhism after the war.Dhauli Stupa Built by Japanese Buddhists and Kalinga Nippon Buddha Sangha.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Konark Sun Temple -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy.png" alt="Konark Sun Temple">
+            <div class="card-content">
+              <h3>Konark Sun Temple</h3>
+              <p>Built by King Narasimhadeva in 13th century (around 1250 CE).Architecture Shaped like a giant chariot of the Sun God with 24 wheels and 7 horses.Also known as Black Pagoda.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Udayagiri & Khandagiri Caves -->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 2.png" alt="Udayagiri & Khandagiri Caves">
+            <div class="card-content">
+              <h3>Udayagiri & Khandagiri Caves</h3>
+              <p>Ancient rock-cut caves,Built during 2nd century BCE,Built by King Kharavela.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mukteshwar Temple  -->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 3.png" alt="Mukteshwar Temple ">
+            <div class="card-content">
+              <h3>Mukteshwar Temple </h3>
+              <p>Built in the 10th century CE (around 950 CE).Architectural Style: Classic Kalinga architecture with intricate carvings and detailed sculptures.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>
+
+
+ <!-- Rajarani Temple -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 4.png" alt="Rajarani Temple">
+            <div class="card-content">
+              <h3>Rajarani Temple</h3>
+              <p>Built in 11th century CE (around 1050 CE).Constructed using distinctive Rajarani sandstone (reddish and yellowish hues).</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lalitgiri Buddhist Complex -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 5.png" alt="Lalitgiri Buddhist Complex">
+            <div class="card-content">
+              <h3>Lalitgiri Buddhist Complex</h3>
+              <p>Dates back to the 1st century CE, used actively till 13th century.One of the oldest Buddhist sites in Odisha; part of the "Diamond Triangle".</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chandragiri -->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 6.png" alt="Chandragiri">
+            <div class="card-content">
+              <h3>Chandragiri</h3>
+              <p>Tibetan Buddhist Monastery (Jirang Monastery).Also Known As Mini Tibet of Odisha.Location: Gajapati district, Odisha.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Taptapani -->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 8.png" alt="Taptapani">
+            <div class="card-content">
+              <h3>Taptapani</h3>
+              <p>Famous For Natural hot sulfur spring.Water Temperature Warm throughout the year.50 km from Berhampur.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>
+
+       <!-- Kuruma  -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 7.png" alt="Kuruma ">
+            <div class="card-content">
+              <h3>Kuruma </h3>
+              <p>Kuruma is an ancient 9th–10th century AD Buddhist monastery site located about 8 km southeast of the Konark Sun Temple in a quiet rural setting .</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sitabinji  -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 9.png" alt=" Sitabinji ">
+            <div class="card-content">
+              <h3> Sitabinji </h3>
+              <p>Mythological Association: The site is linked to the Ramayana, with local traditions associating it with the episode where Goddess Sita gave birth to her sons, Lava and Kusha, after being exiled.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Asur Guhas (Asur Caves)-->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 10.png" alt="Asur Guhas (Asur Caves)">
+            <div class="card-content">
+              <h3>Asur Guhas (Asur Caves)</h3>
+              <p>The caves are believed to have been inhabited by the Asur tribe, one of the oldest tribes in Odisha. The paintings and carvings found here are considered to be over 2,000 years old, depicting scenes of daily life, hunting, and rituals.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kumari Hills and Caves -->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 11.png" alt="Kumari Hills and Caves">
+            <div class="card-content">
+              <h3>Kumari Hills and Caves</h3>
+              <p> Known for its natural caves, prehistoric rock shelters, and tribal culture.Believed to be used by early humans and possibly Buddhist monks.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>
+
+       <!-- Ranipur-Jharial -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 12.png" alt="Ranipur-Jharial">
+            <div class="card-content">
+              <h3>Ranipur-Jharial</h3>
+              <p>The 64 Yogini temple is one of only four such ancient monuments in India, uniquely featuring dancing deity images in an open‑air circular plan with 62 surviving Yoginis.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Umerkote Caves  -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 13.png" alt="Umerkote Caves ">
+            <div class="card-content">
+              <h3>Umerkote Caves </h3>
+              <p>Historically significant as the capital of the Nala dynasty (4th–5th century CE).</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bhimkund -->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 14.png" alt="Bhimkund">
+            <div class="card-content">
+              <h3>Bhimkund</h3>
+              <p>The picture shows steep rock walls and narrow gorges framing the water—reflecting the erosive cave-like formation of the Baitarani river.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Asurkhol Caves-->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 15.png" alt="Asurkhol Caves">
+            <div class="card-content">
+              <h3>Asurkhol Caves</h3>
+              <p>Asurkhol is approximately 40 km from Keonjhar city, making it accessible for a day trip. The nearest bus stand is Parsala, and the nearest airport is in Bhubaneswar, about 150 km away .</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>
+
+       <!-- Jogimara Caves  -->
+      <div class="card" onclick="location.href='goa.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 16.png" alt="Jogimara Caves ">
+            <div class="card-content">
+              <h3>Jogimara Caves </h3>
+              <p>This cave is approximately 15 feet by 12 feet in size and is known for its inscriptions in Brahmi script, which are among the oldest in India.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Beach vibes, water sports, perfect for friends!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ratnagiri Buddhist Monastery -->
+      <div class="card" onclick="location.href='manali.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 17.png" alt="Ratnagiri Buddhist Monastery">
+            <div class="card-content">
+              <h3>Ratnagiri Buddhist Monastery</h3>
+              <p>An array of small votive stupas arranged in neat rows, each intricately carved with Buddhist deities.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Mountain trekking, snowfall, river fun for families & couples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pandava Bakhara -->
+      <div class="card" onclick="location.href='jaipur.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 18.png" alt="Pandava Bakhara">
+            <div class="card-content">
+              <h3>Pandava Bakhara</h3>
+              <p>A lightly trodden and adventurous trek through thorny jungle. The reward? Ancient carvings, cliff‑top views, and a strong sense of history and mythology.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>History walks, forts & palaces, ideal for culture lovers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Udayagiri Buddhist Site -->
+      <div class="card" onclick="location.href='kerala.html'">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="image copy 19.png" alt="Udayagiri Buddhist Site">
+            <div class="card-content">
+              <h3>Udayagiri Buddhist Site</h3>
+              <p>Flourished 7th–12th CE under Bhauma-Kara and Somavamsi dynasties, with excavations between 1985–89 and 1997–2003 revealing stupas, monasteries, sculptures, inscriptions, and water structures.</p>
+            </div>
+            <i class="fas fa-crosshairs cross-icon"></i>
+          </div>
+          <div class="card-back">
+            <h3>Trip Style</h3>
+            <p>Relaxation, houseboats & nature escapes. Great for couples & families.</p>
+          </div>
+        </div>
+      </div>  
+
+    </div>
+
+  </body>
+  </html>

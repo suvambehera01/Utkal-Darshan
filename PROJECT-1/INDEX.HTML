@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travel Itinerary Planner</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <style>* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background: #f4f4f4;
+  color: #333;
+}
+
+header {
+  background: #312a02;
+  color: #fff;
+  padding: 10px 0;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 28px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-left: 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero {
+  background: url(https://odishatourism.gov.in/content/dam/tourism/home/home-banner/banner.webp) no-repeat center center/cover;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content {
+  width: 100%;
+}
+
+.hero h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 12px 25px;
+  background: #ff6347;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.features {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  justify-content: center;
+  padding: 0 30px;
+}
+
+.card {
+  background: #d5d5d5;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 15px;
+  color: #555;
+}
+
+@media screen and (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.smart-travel {
+  background-color: #fdfdfd;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.smart-travel .content-box {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.smart-travel h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #222;
+}
+
+.smart-travel h2 span {
+  color: #7c3aed;
+}
+
+.smart-travel .subtitle {
+  font-size: 18px;
+  color: #555;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.travel-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.travel-card {
+  width: 200px;
+  background-color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(218, 20, 20, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.travel-card img {
+  width: 10%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.travel-card:hover {
+  transform: translateY(-5px);
+}
+
+.travel-card h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.travel-card h3 span {
+  color: #8b5cf6;
+  font-weight: bold;
+}
+
+.travel-card p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 768px) {
+  .travel-columns {
+    flex-direction: column;
+  }
+}
+
+.main-footer {
+  background-color: #312a02;
+  padding: 40px 20px 20px;
+  border-top: 1px solid #270d0d;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  gap: 40px;
+}
+
+.footer-about {
+  flex: 1 1 300px;
+}
+
+.footer-logo {
+  width: 40px;
+  vertical-align: middle;
+}
+
+.footer-about h3 {
+  display: inline-block;
+  font-size: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+  color: #dbd5d5;
+}
+
+.footer-about p {
+  margin-top: 15px;
+  color: #ffffff;
+  font-size: 15px;
+  max-width: 300px;
+}
+
+.footer-links {
+  display: flex;
+  flex: 2 1 500px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-links h4 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #bc9292;
+}
+
+.footer-links a {
+  display: block;
+  margin-bottom: 8px;
+  color: #fdfdfd;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #1e90ff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-links div {
+    margin-bottom: 20px;
+  }
+}
+
+.travel-inspiration {
+  text-align: center;
+  /* padding: 60px 20px; */
+  background-color: #f9f9f9;
+}
+
+.travel-inspiration h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.travel-inspiration p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+
+
+.travel-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px; /* 🔁 Gap between 3 cards */
+  margin-top: 30px; /* Optional: space from heading */
+}
+
+  .travel-card {
+    width: 320px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: white;
+    font-family: Arial, sans-serif;
+    transition: box-shadow 0.5s ease;
+  }
+
+.travel-card:hover {
+  animation: glowOnce 0.5s forwards; /* one-time blink */
+  box-shado :non;      /* keep glowing while hovered */
+}
+
+
+
+  @keyframes glowOnce {
+    0% {
+      box-shadow: 0 0 0px #cac41e;
+    }
+    50% {
+      box-shadow: 0 0 30px #cac41e, 0 0 40px #a278ff;
+    }
+    100% {
+      box-shadow: 0 0 30px #534e18;
+    }
+  }
+
+  .travel-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .travel-info {
+    padding: 20px;
+  }
+
+  .travel-info h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .travel-info p {
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  .travel-info span {
+    font-style: italic;
+    color: #777;
+  }
+
+  @media (max-width: 900px) {
+  .travel-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+
+
+/* ✅ Small Card Modifications for Jagannath, Dhauli, Waterfalls */
+.card {
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+
+
+
+ 
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  padding: 0;
+}
+
+nav ul li {
+  position: relative;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+nav ul li a:hover {
+  transform: translateY(-6px);
+}
+
+nav ul li a::after {
+  content: attr(data-label);
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background-color: #ff9800;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 13px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10;
+}</style>
+
+
+
+
+  <!-- Header Section -->
+  <header>
+    <div class="container">
+      <h2>
+        <img src="https://i.pinimg.com/1200x/da/9d/1e/da9d1e109b5103e9f5e490d1dcfa75be.jpg" alt="logo" height="50" width="50">
+        Travel Itinerary Planner
+      </h2>
+      <nav>
+  <ul>
+    <li><a href="#explore" data-label="Explore Trips">Explore</a></li>
+    <li><a href="login.html" data-label="Access Your Account">Login/SignUp</a></li>
+  </ul>
+</nav>
+
+    </div>
+  </header>
+
+
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Plan Your Next Adventure</h2>
+      <p>Organize destinations, set budgets, and create unforgettable travel experiences.</p>
+        
+    </div>
+  </section>
+
+
+
+
+
+  <!-- Travel Picks -->
+  <section id="explore" class="travel-inspiration">
+    <br>
+    <br>
+    <br>
+    <h2>Odisha Travel Picks</h2>
+    <p>Explore the most iconic destinations in Odisha through our community recommendations.</p>
+
+    <section id="explore" class="travel-inspiration">
+  <!-- rest of your cards -->
+</section>
+    <div class="travel-cards">
+      <!-- Card 1 -->
+      <div class="travel-card">
+        <a href="temple.html">
+          <img src="https://media.istockphoto.com/id/1069137628/photo/top-of-the-jagannath-temple-puri-odisha-india.jpg?s=612x612&w=0&k=20&c=QIj54CAlnD_CKzb1roAVms9f2fdWnqwOb3BMSMvbee4=" alt="Jagannath Temple">
+        </a>
+        <div class="travel-info">
+          <a href="temple.html"><h3>Jagannath Temple</h3></a>
+          <p>Discover the spiritual richness of Puri through this sacred temple visit, rituals, and beach walks.</p>
+          
+        </div>
+      </div>
+
+
+
+      <!-- Card 2 -->
+      <div class="travel-card">
+        <a href="dhauli.html">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Dhauli-Giri-Shanti-Stupa-Bhubaneswar-Orissa.jpg" alt="Dhauli Stupa">
+          
+        </a>
+        <div class="travel-info">
+          <h3>Dhauli Peace Tour</h3>
+          <p>Explore ancient Buddhist heritage and peaceful vibes at Bhubaneswar’s Dhauli Giri Stupa.</p>
+          
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="travel-card">
+        <a href="Waterfall.html">
+          <img src="https://taxilotrip.com/uploads/0000/312/2024/07/10/picture4.jpg" alt="Waterfall">
+        </a>
+        <div class="travel-info">
+          <h3>Hidden Waterfalls</h3>
+          <p>Enjoy a thrilling getaway to Odisha’s secret waterfalls, perfect for adventure lovers.</p>
+        
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Smart Planning -->
+  <section class="smart-travel">
+    <div class="content-box">
+      <h2><span>Smart</span> Planning for Every Travel Dream</h2>
+      <p class="subtitle">
+        Whether you're exploring solo, planning a family vacation, or organizing a group trip — our intelligent features help you plan everything easily and efficiently.
+      </p>
+      <div class="travel-columns">
+        <div class="travel-card">
+          <h3><span>🚀 AI-Based</span> Route Optimization</h3>
+          <p>Find the best travel routes with minimal time and cost. Our system calculates smart paths for smooth city tours or cross-country trips.</p>
+        </div>
+        <div class="travel-card">
+          <h3><span>📦 All-in-One</span> Travel Organizer</h3>
+          <p>Manage everything in one place — destinations, hotels, flights, tips, and more. Stay organized without the stress of switching apps.</p>
+        </div>
+        <div class="travel-card">
+          <h3><span>👥 Group</span> Planning Made Easy</h3>
+          <p>Plan trips with friends or family in real-time. Everyone stays updated, involved, and excited throughout the journey.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <style>
+    .btn {
+      background-color: #ff6347;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background-color: #e5533d;
+    }
+  </style>
+  <div style="text-align:center; margin: 40px 0;">
+    <a href="https://www.google.com/maps/search/tourist+places+in+odisha" target="_blank" class="btn">More Options Near Me</a>
+  </div>
+
+  <!-- Back to Home Button -->
+  <div style="text-align:center; margin-bottom: 60px;">
+    <a href="index.html" class="btn" style="background:#333;">Back to Home</a>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="main-footer">
+    <!-- ... existing footer content ... -->
+  </footer>
+
+
+
+
+
+
+
+
+
+  <!-- Footer Section -->
+   
+
+
+
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-about">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIaKH86aUbnqpKmfPxSvhDpztDPEWFUTeTDaWO0OzfoQMXVlYfvvAw3kHobNIBcP1DOw0&usqp=CAU" alt="logo" class="footer-logo" />
+        <h3>Trip Planner</h3>
+        <p>Turn your next trip into a hassle-free experience with Travel Itinerary Planner</p>
+      </div>
+
+      <div class="footer-links">
+        <div>
+          <h4>Legal</h4>
+          <a href="Terms and Conditions.html">Terms and Conditions</a>
+          <a href="Privacy Policy.html">Privacy Policy</a>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <a href="ContactUs.html">Contact Us</a>
+        </div>
+        <div>
+          <h4>Itineraries</h4>
+          <a href="Community Trips.html">Community Trips</a>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Trip Planner. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

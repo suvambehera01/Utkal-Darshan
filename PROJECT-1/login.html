@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Signup Webpage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;500;700&display=swap');
+
+    * { box-sizing: border-box; }
+
+    body {
+      background: #F6F5F7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: 'Poppins';
+      height: 100vh;
+      margin: -20px 0 50px;
+    }
+
+    h1 { font-weight: 600; margin: 0; }
+    h2 { text-align: center; }
+    p {
+      font-size: .85rem;
+      font-weight: 200;
+      line-height: 1.25rem;
+      letter-spacing: 0.5px;
+      margin: 20px 0 30px;
+    }
+    span { font-size: .75rem; }
+    a {
+      color: #333;
+      font-size: .85rem;
+      text-decoration: none;
+      margin: 15px 0;
+    }
+
+    button {
+      border-radius: 20px;
+      border: 1px solid #27CDA7;
+      background-color: #27CDA7;
+      color: #fff;
+      font-size: .75rem;
+      font-weight: 500;
+      padding: 0.75rem 2.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all .25s ease-in;
+      cursor: pointer;
+    }
+
+    button:hover { background-color: #37DFB8; }
+    button:active { transform: scale(.95); }
+    button:focus { outline: none; }
+    button.ghost {
+      background-color: transparent;
+      border-color: #fff;
+    }
+
+    form {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 50px;
+      height: 100%;
+      text-align: center;
+    }
+
+    input {
+      background-color: #eee;
+      border: none;
+      padding: 12px 15px;
+      margin: 8px 0;
+      width: 100%;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+      position: relative;
+      overflow: hidden;
+      width: 768px;
+      max-width: 100%;
+      min-height: 400px;
+    }
+
+    .form-container {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      transition: all .5s ease-in-out;
+    }
+
+    .login-container {
+      left: 0;
+      width: 50%;
+      z-index: 2;
+    }
+
+    .container.right-panel-active .login-container {
+      transform: translateX(100%);
+    }
+
+    .signup-container {
+      left: 0;
+      width: 50%;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .container.right-panel-active .signup-container {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+      animation: show .5s;
+    }
+
+    @keyframes show {
+      0%, 49.99% { opacity: 0; z-index: 1; }
+      50%, 100% { opacity: 1; z-index: 5; }
+    }
+
+    .overlay-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: all .5s ease-in-out;
+      z-index: 100;
+    }
+
+    .container.right-panel-active .overlay-container {
+      transform: translateX(-100%);
+    }
+
+    .overlay {
+      background: linear-gradient(to right, #37DFB8, #E87B37, #E8375A);
+      background-size: cover;
+      background-position: 0 0;
+      color: #fff;
+      position: relative;
+      left: -100%;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: transform .5s ease-in-out;
+    }
+
+    .container.right-panel-active .overlay {
+      transform: translateX(50%);
+    }
+
+    .overlay-panel {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 40px;
+      text-align: center;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      transform: translateX(0);
+      transition: transform .5s ease-in-out;
+    }
+
+    .overlay-left {
+      transform: translateX(-20%);
+    }
+
+    .container.right-panel-active .overlay-left {
+      transform: translateX(0);
+    }
+
+    .overlay-right {
+      right: 0;
+      transform: translateX(0);
+    }
+
+    .container.right-panel-active .overlay-right {
+      transform: translateX(20%);
+    }
+
+    .social-container {
+      margin: 20px 0;
+    }
+
+    .social-container a {
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 5px;
+      height: 40px;
+      width: 40px;
+    }
+
+    @media(max-width: 730px) {
+      h1 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" id="container">
+    <div class="form-container signup-container">
+      <!-- MODIFIED: Added id="signup-form" and removed action/method -->
+      <form id="signup-form">
+        <h1>Create Account</h1>
+        <div class="social-container">
+          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your email for registration</span>
+        <!-- MODIFIED: "Name" field is currently ignored by the backend -->
+        <input type="text" placeholder="Name">
+        <!-- MODIFIED: Added id="signup-email" -->
+        <input type="email" placeholder="Email" id="signup-email" required>
+        <!-- MODIFIED: Added id="signup-password" -->
+        <input type="password" placeholder="Password" id="signup-password" required>
+        <button type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <div class="form-container login-container">
+      <!-- MODIFIED: Added id="login-form" and removed action/method -->
+      <form id="login-form">
+        <h1>Login</h1>
+        <div class="social-container">
+          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your account</span>
+        <!-- MODIFIED: Added id="login-email" -->
+        <input type="email" placeholder="Email" id="login-email" required>
+        <!-- MODIFIED: Added id="login-password" -->
+        <input type="password" placeholder="Password" id="login-password" required>
+        <a href="#">Forgot your password?</a>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back</h1>
+          <p>To keep connected with us please login with your personal info</p>
+          <button class="ghost" id="login">Login</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Hello Friend</h1>
+          <p>Enter your personal details and start journey with us</p>
+          <button class="ghost" id="signup">Signup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODIFIED: The entire script block below is updated -->
+
+
+  <!-- MODIFIED: The entire script block below is updated -->
+  <script>
+    // --- PART 1: Code for the sliding animation ---
+    const signUpButton = document.getElementById('signup');
+    const loginButton = document.getElementById('login');
+    const container = document.getElementById('container');
+
+
+    signUpButton.addEventListener('click', () => {
+      container.classList.add('right-panel-active');
+    });
+
+
+    loginButton.addEventListener('click', () => {
+      container.classList.remove('right-panel-active');
+    });
+
+
+    // --- PART 2: Code for handling form submissions ---
+    const signupForm = document.getElementById('signup-form');
+    const loginForm = document.getElementById('login-form');
+
+
+    // --- Handle Signup Form ---
+    signupForm.addEventListener('submit', (event) => {
+      // 1. Prevent the form from doing a default page reload
+      event.preventDefault();
+
+
+      // 2. Get the user's input from the form fields
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+
+
+      // 3. Send the data to your backend's registration endpoint
+      fetch('http://localhost:8083/api/register', { // Assuming your backend is on port 8081
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        // The backend expects "username", so we pass the email as the username
+        body: JSON.stringify({
+          username: email,
+          password: password
+        })
+      })
+      .then(response => response.text()) // Get the plain text response
+      .then(message => {
+        alert(message); // Show the response message (e.g., "User registered successfully!")
+      })
+      .catch(error => {
+        console.error('Error during signup:', error);
+        alert('Signup failed. See console for details.');
+      });
+    });
+
+
+    // --- Handle Login Form ---
+    loginForm.addEventListener('submit', (event) => {
+      // 1. Prevent page reload
+      event.preventDefault();
+
+
+      // 2. Get user's input
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+
+      // 3. Send data to your backend's login endpoint
+      fetch('http://localhost:8083/api/login', { // Assuming your backend is on port 8081
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: email,
+          password: password
+        })
+      })
+      .then(response => response.text())
+      .then(message => {
+        alert(message); // Show response (e.g., "Login successful!" or "Invalid credentials")
+
+        // === START OF NEW REDIRECTION LOGIC ===
+        if (message === "Login successful!") {
+          window.location.href = "index.html"; // Redirect to your home page
+        }
+        // === END OF NEW REDIRECTION LOGIC ===
+      })
+      .catch(error => {
+        console.error('Error during login:', error);
+        alert('Login failed. See console for details.');
+      });
+    });
+  </script>
+</body>
+</html>

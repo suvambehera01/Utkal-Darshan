@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odisha Travel Guide - Artistic Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style-alt.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Odisha Revealed</div>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#activities">Activities</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <canvas class="webgl"></canvas>
+        <div class="hero-content">
+            <h1>The Spirit of Incredible India</h1>
+            <p>Explore the timeless beauty and cultural depths of Odisha.</p>
+            <a href="#destinations" class="btn">Begin Your Journey</a>
+        </div>
+    </section>
+
+    <!-- The rest of your HTML content remains the same -->
+    <section id="about">
+        <div class="container">
+            <h2>About Odisha</h2>
+            <p>Odisha, an eastern Indian state, is a tapestry of vibrant culture, ancient history, and breathtaking natural beauty. From serene beaches to dense forests and architectural marvels, it offers a journey for every soul.</p>
+        </div>
+    </section>
+
+    <section id="destinations">
+        <div class="container">
+            <h2>Featured Destinations</h2>
+            <div class="destination-grid">
+                <div class="destination-card">
+                    <img src="https://assets.odishabytes.com/wp-content/uploads/2025/01/Bhubaneswar-City.jpeg" alt="Bhubaneswar">
+                    <div class="card-content">
+                        <h3>Bhubaneswar</h3>
+                        <p>The "Temple City," where ancient history meets modern aspirations.</p>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://www.tusktravel.com/blog/wp-content/uploads/2023/03/Jagannath-Rath-Yatra-Puri-Odisha-1.jpg" alt="Puri">
+                     <div class="card-content">
+                        <h3>Puri</h3>
+                        <p>Home of the Jagannath Temple and serene golden beaches.</p>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://static.toiimg.com/thumb/msid-59283025,width=1200,height=900/59283025.jpg" alt="Konark">
+                     <div class="card-content">
+                        <h3>Koraput</h3>
+                        <p>Behold the magnificent Sun Temple, a UNESCO World Heritage Site.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <section id="activities">
+        <div class="container">
+            <h2>Things to Experience</h2>
+            <div class="activities-grid">
+                <div class="activity-item">Explore ancient temples</div>
+                <div class="activity-item">Relax on pristine beaches</div>
+                <div class="activity-item">Discover unique wildlife</div>
+                <div class="activity-item">Experience local art</div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <form id="contact-form">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn">Send Inquiry</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Odisha Revealed. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/script-alt.js"></script>
+</body>
+<style>
+    /* General Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    line-height: 1.8;
+    color: #444;
+    background: #fdfaf6;
+}
+
+.container {
+    width: 85%;
+    margin: auto;
+    overflow: hidden;
+    padding: 40px 0;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 3em;
+    color: #333;
+}
+
+/* Header */
+header {
+    background: transparent;
+    color: #fff;
+    padding: 1.5rem 0;
+    position: fixed; /* Changed from sticky to fixed */
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background 0.3s ease;
+}
+
+header.scrolled {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    margin: auto;
+}
+
+nav .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 300;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+nav ul li a:hover {
+    border-color: #e8a87c;
+}
+
+/* Hero Section */
+#hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+
+.webgl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+.hero-content {
+    background: none; /* Removed background for a cleaner look */
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 5em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+    font-size: 1.5em;
+    font-weight: 300;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #e8a87c;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px; /* Pill-shaped button */
+    margin-top: 30px;
+    transition: background 0.3s, transform 0.3s;
+    font-weight: 400;
+}
+
+.btn:hover {
+    background: #c38d6b;
+    transform: translateY(-3px);
+}
+
+/* Destinations Section */
+#destinations {
+    background: #fff;
+    padding: 60px 0;
+}
+
+.destination-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.destination-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    position: relative;
+    color: #fff;
+    height: 400px;
+}
+
+.destination-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.destination-card:hover img {
+    transform: scale(1.1);
+}
+
+.card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    box-sizing: border-box;
+}
+
+.card-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    margin: 0 0 10px 0;
+}
+
+/* Activities Section */
+#activities {
+    padding: 60px 0;
+}
+
+.activities-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.activity-item {
+    background: #fff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+    background: #e8a87c;
+    color: #fff;
+    border-color: #e8a87c;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+
+/* Contact Section */
+#contact {
+    background: #e8a87c;
+    color: #fff;
+    padding: 60px 0;
+}
+
+#contact h2 {
+    color: #fff;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+
+#contact-form input, #contact-form textarea {
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+}
+
+#contact-form .btn {
+    background: #fff;
+    color: #e8a87c;
+}
+
+#contact-form .btn:hover {
+    background: #fdfaf6;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #333;
+    color: #aaa;
+}
+
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // --- 3D Animation Setup (Particles) ---
+
+    // Scene
+    const scene = new THREE.Scene();
+
+    // Canvas
+    const canvas = document.querySelector('canvas.webgl');
+
+    // Sizes
+    const sizes = {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+    camera.position.z = 5;
+    scene.add(camera);
+    
+    // Particles
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 5000;
+    const posArray = new Float32Array(particlesCount * 3);
+
+    for (let i = 0; i < particlesCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 10;
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+    const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.005,
+        color: '#e8a87c'
+    });
+
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particles);
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    
+    // Mouse Interaction
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+    });
+
+    // Animation Loop
+    const clock = new THREE.Clock();
+    const tick = () => {
+        const elapsedTime = clock.getElapsedTime();
+        
+        // Animate particles
+        particles.rotation.y = elapsedTime * 0.05;
+
+        // Make particles respond to mouse
+        const targetX = mouseX * 0.001;
+        const targetY = mouseY * 0.001;
+        
+        particles.rotation.x += 0.05 * (targetY - particles.rotation.x);
+        particles.rotation.y += 0.05 * (targetX - particles.rotation.y);
+
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+    };
+    tick();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        sizes.width = window.innerWidth;
+        sizes.height = window.innerHeight;
+
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    });
+
+
+    // --- Other JavaScript ---
+    
+    // Header scroll effect
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // Contact form submission
+    const contactForm = document.getElementById('contact-form');
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Thank you for your inquiry! We will connect with you shortly.');
+        contactForm.reset();
+    });
+});
+
+</script>
+</html>
