@@ -3,27 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Travel Itinerary Planner</title>
+  <title>Utkal Darshan | Premium Odisha Travel</title>
+  <!-- Modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <style>* {
+    <style>
+/* =========================================
+   Global base styles
+   ========================================= */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   line-height: 1.6;
-  background: #f4f4f4;
+  background: #603b3b;
   color: #333;
-}
-
-header {
-  background: #312a02;
-  color: #fff;
-  padding: 10px 0;
 }
 
 .container {
@@ -34,23 +36,267 @@ header {
   align-items: center;
 }
 
-header h1 {
-  font-size: 28px;
+/* =========================================
+   Premium sticky navbar (dark + gold)
+   ========================================= */
+/* Keep page content visible under fixed navbar */
+body {
+  padding-top: 84px; /* matches .nav height + spacing */
 }
 
-nav ul {
+.nav {
+  position: fixed; /* sticky at top while scrolling */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  color: #f3f1ea;
+  background:
+    radial-gradient(1200px 600px at 20% -30%, rgba(214, 167, 90, 0.22), transparent 55%),
+    linear-gradient(180deg, rgba(10, 12, 16, 0.88), rgba(10, 12, 16, 0.78));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(214, 167, 90, 0.22);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45); /* subtle depth */
+}
+
+.nav__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  min-width: 220px;
+}
+
+.brand__logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(214, 167, 90, 0.35);
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand__name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.brand__tagline {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(243, 241, 234, 0.78);
+}
+
+.nav__toggle {
+  display: none; /* shown on mobile */
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(214, 167, 90, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f3f1ea;
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.nav__toggle:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(214, 167, 90, 0.45);
+}
+
+.nav__toggle:focus-visible {
+  outline: 3px solid rgba(214, 167, 90, 0.35);
+  outline-offset: 2px;
+}
+
+.nav__menu {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav__links {
   list-style: none;
   display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0;
+  margin: 0;
 }
 
-nav ul li {
-  margin-left: 20px;
-}
-
-nav ul li a {
-  color: #fff;
+.nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 10px;
   text-decoration: none;
-  font-weight: bold;
+  color: rgba(243, 241, 234, 0.9);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+/* Underline + subtle glow hover */
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d6a75a, #f4d58d);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms ease;
+  opacity: 0.95;
+}
+
+.nav__link:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+  text-shadow: 0 0 20px rgba(214, 167, 90, 0.25);
+}
+
+.nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  color: #0a0c10;
+  background: linear-gradient(135deg, #d6a75a, #f4d58d);
+  box-shadow: 0 12px 28px rgba(214, 167, 90, 0.25);
+  border: 1px solid rgba(244, 213, 141, 0.45);
+  transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+}
+
+.nav__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(214, 167, 90, 0.32);
+  filter: saturate(1.1);
+}
+
+.nav__cta:focus-visible {
+  outline: 3px solid rgba(214, 167, 90, 0.35);
+  outline-offset: 2px;
+}
+
+/* Logout button (matches premium navbar) */
+.nav__logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(214, 167, 90, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(243, 241, 234, 0.92);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+.nav__logout:hover {
+  transform: translateY(-2px);
+  border-color: rgba(214, 167, 90, 0.55);
+  background: rgba(255, 255, 255, 0.08);
+}
+.nav__logout:focus-visible {
+  outline: 3px solid rgba(214, 167, 90, 0.35);
+  outline-offset: 2px;
+}
+
+/* Mobile layout */
+@media (max-width: 860px) {
+  body {
+    padding-top: 78px;
+  }
+
+  .nav__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 14px 18px 18px;
+    display: grid;
+    gap: 12px;
+    background: rgba(10, 12, 16, 0.92);
+    border-bottom: 1px solid rgba(214, 167, 90, 0.18);
+    transform: translateY(-6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 160ms ease, transform 160ms ease;
+  }
+
+  .nav[data-open="true"] .nav__menu {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav__links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .nav__link {
+    padding: 12px 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .nav__link::after {
+    left: 12px;
+    right: 12px;
+    bottom: 8px;
+  }
+
+  .nav__cta {
+    width: 100%;
+    justify-content: center;
+    height: 44px;
+  }
 }
 
 .hero {
@@ -138,7 +384,7 @@ nav ul li a {
 }
 
 .smart-travel {
-  background-color: #fdfdfd;
+  background-color: #e4cccc;
   padding: 60px 20px;
   text-align: center;
 }
@@ -306,8 +552,10 @@ nav ul li a {
 
 .travel-inspiration {
   text-align: center;
-  /* padding: 60px 20px; */
+  /* Use real section padding instead of <br> gaps */
+  padding: 56px 20px;
   background-color: #f9f9f9;
+  margin: 0; /* prevent inconsistent spacing */
 }
 
 .travel-inspiration h2 {
@@ -329,6 +577,7 @@ nav ul li a {
   flex-wrap: wrap;
   gap: 40px; /* 🔁 Gap between 3 cards */
   margin-top: 30px; /* Optional: space from heading */
+  margin-bottom: 0; /* avoid extra gap before next section */
 }
 
   .travel-card {
@@ -342,7 +591,7 @@ nav ul li a {
 
 .travel-card:hover {
   animation: glowOnce 0.5s forwards; /* one-time blink */
-  box-shado :non;      /* keep glowing while hovered */
+  box-shadow: none;      /* keep glowing while hovered */
 }
 
 
@@ -373,7 +622,13 @@ nav ul li a {
     margin: 0 0 10px;
     font-size: 20px;
     color: #000;
-    text-decoration: underline;
+    text-decoration: none; /* remove unwanted underline */
+  }
+
+  /* Prevent underline from the title link too */
+  .travel-info a {
+    text-decoration: none;
+    color: inherit;
   }
 
   .travel-info p {
@@ -447,25 +702,508 @@ nav ul li a::after {
   opacity: 0;
   transition: all 0.3s ease;
   z-index: 10;
-}</style>
+}
+
+/* =========================================
+   Utkal Darshan AI Travel Assistant (Widget)
+   - Floating button + premium chat panel
+   - Responsive, accessible, minimal JS
+   ========================================= */
+.ai-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  /* Keep below navbar to avoid overlap */
+  z-index: 9000;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  border: 1px solid rgba(214, 167, 90, 0.28);
+  background:
+    radial-gradient(900px 300px at 20% 0%, rgba(214, 167, 90, 0.24), transparent 40%),
+    linear-gradient(180deg, rgba(10, 12, 16, 0.92), rgba(10, 12, 16, 0.78));
+  color: #f3f1ea;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.ai-fab:hover {
+  transform: translateY(-2px);
+  border-color: rgba(214, 167, 90, 0.5);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.5);
+}
+
+.ai-fab:focus-visible {
+  outline: 3px solid rgba(214, 167, 90, 0.35);
+  outline-offset: 3px;
+}
+
+.ai-panel {
+  position: fixed;
+  right: 18px;
+  bottom: 86px;
+  /* Keep below navbar (navbar stays above) */
+  z-index: 9000;
+  width: min(380px, calc(100vw - 36px));
+  /* Prevent overlapping navbar on short screens */
+  height: min(520px, calc(100dvh - 84px - 110px));
+  max-height: calc(100dvh - 84px - 110px);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(214, 167, 90, 0.22);
+  background:
+    radial-gradient(900px 500px at 10% 0%, rgba(214, 167, 90, 0.18), transparent 55%),
+    linear-gradient(180deg, rgba(10, 12, 16, 0.92), rgba(10, 12, 16, 0.82));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 26px 80px rgba(0,0,0,0.55);
+  transform: translateY(10px) scale(0.98);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-panel[data-open="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.modal-open {
+  overflow: hidden; /* disable page scrolling when modal is open */
+}
+
+/* =========================================
+   Auth Modal (Login / Signup)
+   ========================================= */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9500; /* above assistant, below navbar */
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.auth-overlay[data-open="true"] {
+  display: flex;
+}
+
+.auth-modal {
+  width: min(420px, 100%);
+  border-radius: 18px;
+  border: 1px solid rgba(214, 167, 90, 0.22);
+  background:
+    radial-gradient(900px 500px at 10% 0%, rgba(214, 167, 90, 0.16), transparent 55%),
+    linear-gradient(180deg, rgba(10, 12, 16, 0.94), rgba(10, 12, 16, 0.86));
+  box-shadow: 0 34px 120px rgba(0,0,0,0.65);
+  overflow: hidden;
+  transform: translateY(8px) scale(0.98);
+  opacity: 0;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.auth-overlay[data-open="true"] .auth-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.auth-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid rgba(214, 167, 90, 0.16);
+}
+
+.auth-head h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(243, 241, 234, 0.95);
+}
+
+.auth-head p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: rgba(243, 241, 234, 0.72);
+}
+
+.auth-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #f3f1ea;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+.auth-close:hover { background: rgba(255,255,255,0.09); transform: translateY(-1px); }
+.auth-close:focus-visible { outline: 3px solid rgba(214, 167, 90, 0.35); outline-offset: 2px; }
+
+.auth-body {
+  padding: 14px 16px 16px;
+}
+
+.auth-alert {
+  display: none;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(244, 213, 141, 0.28);
+  background: rgba(214, 167, 90, 0.10);
+  color: rgba(243, 241, 234, 0.92);
+  font-size: 12px;
+}
+
+.auth-alert[data-show="true"] { display: block; }
+
+.auth-field {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.auth-label {
+  font-size: 12px;
+  color: rgba(243, 241, 234, 0.8);
+}
+.auth-input {
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.06);
+  padding: 0 12px;
+  color: rgba(243, 241, 234, 0.92);
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.auth-input:focus {
+  border-color: rgba(214, 167, 90, 0.45);
+  box-shadow: 0 0 0 4px rgba(214, 167, 90, 0.14);
+}
+
+.auth-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.auth-btn {
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(243, 241, 234, 0.92);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+.auth-btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.08); border-color: rgba(214, 167, 90, 0.24); }
+
+.auth-btn--gold {
+  border: 1px solid rgba(244, 213, 141, 0.45);
+  background: linear-gradient(135deg, #d6a75a, #f4d58d);
+  color: #0a0c10;
+}
+.auth-btn--gold:hover { filter: saturate(1.08); }
+
+.auth-foot {
+  margin-top: 12px;
+  font-size: 12px;
+  color: rgba(243, 241, 234, 0.65);
+  line-height: 1.4;
+}
+
+@media (max-width: 420px) {
+  .auth-actions { grid-template-columns: 1fr; }
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px;
+  border-bottom: 1px solid rgba(214, 167, 90, 0.18);
+}
+
+.ai-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f3f1ea;
+}
+
+.ai-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(214, 167, 90, 0.28), rgba(255,255,255,0.06));
+  border: 1px solid rgba(214, 167, 90, 0.25);
+}
+
+.ai-title h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.ai-title p {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(243, 241, 234, 0.78);
+}
+
+.ai-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #f3f1ea;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.ai-close:hover {
+  background: rgba(255,255,255,0.09);
+  transform: translateY(-1px);
+}
+
+.ai-close:focus-visible {
+  outline: 3px solid rgba(214, 167, 90, 0.35);
+  outline-offset: 2px;
+}
+
+.ai-messages {
+  /* Flexible height (panel uses flex layout) */
+  flex: 1;
+  padding: 14px;
+  overflow: auto;
+  scroll-behavior: smooth;
+}
+
+.ai-msg {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.ai-msg__bubble {
+  max-width: 90%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  line-height: 1.35;
+  font-size: 13px;
+  color: rgba(243, 241, 234, 0.92);
+  white-space: pre-line; /* supports short multi-line answers */
+}
+
+.ai-msg--bot .ai-msg__bubble {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(214, 167, 90, 0.14);
+}
+
+.ai-msg--bot {
+  justify-items: start; /* bot on left */
+}
+
+.ai-msg--user {
+  justify-items: end; /* user on right */
+}
+
+.ai-msg--user .ai-msg__bubble {
+  background: linear-gradient(135deg, rgba(214, 167, 90, 0.92), rgba(244, 213, 141, 0.86));
+  color: #0a0c10;
+  border-color: rgba(244, 213, 141, 0.55);
+}
+
+.ai-hintbar {
+  display: flex;
+  gap: 8px;
+  padding: 0 14px 10px;
+  flex-wrap: wrap;
+}
+
+.ai-chip {
+  border: 1px solid rgba(214, 167, 90, 0.18);
+  background: rgba(255,255,255,0.05);
+  color: rgba(243, 241, 234, 0.9);
+  font-size: 12px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.ai-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(214, 167, 90, 0.4);
+  background: rgba(255,255,255,0.07);
+}
+
+.ai-inputbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 14px 14px;
+  border-top: 1px solid rgba(214, 167, 90, 0.18);
+  background: rgba(0,0,0,0.12);
+}
+
+.ai-input {
+  height: 42px;
+  flex: 1;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.06);
+  padding: 0 12px;
+  color: rgba(243, 241, 234, 0.92);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.ai-input:focus {
+  border-color: rgba(214, 167, 90, 0.45);
+  box-shadow: 0 0 0 4px rgba(214, 167, 90, 0.16);
+}
+
+.ai-input::placeholder {
+  color: rgba(243, 241, 234, 0.55);
+}
+
+.ai-send {
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(244, 213, 141, 0.45);
+  background: linear-gradient(135deg, #d6a75a, #f4d58d);
+  color: #0a0c10;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 160ms ease, filter 160ms ease;
+  white-space: nowrap;
+}
+
+.ai-send:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.08);
+}
+
+/* Premium scrollbar (messages) */
+.ai-messages::-webkit-scrollbar {
+  width: 10px;
+}
+.ai-messages::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+.ai-messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(214, 167, 90, 0.55), rgba(244, 213, 141, 0.38));
+  border-radius: 999px;
+  border: 2px solid rgba(10, 12, 16, 0.6);
+}
+.ai-messages {
+  scrollbar-color: rgba(214, 167, 90, 0.55) rgba(255, 255, 255, 0.04);
+  scrollbar-width: thin;
+}
+
+/* Typing indicator (animated dots) */
+.ai-typing {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.ai-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(243, 241, 234, 0.75);
+  animation: aiBreathe 900ms infinite ease-in-out;
+}
+.ai-dot:nth-child(2) { animation-delay: 120ms; }
+.ai-dot:nth-child(3) { animation-delay: 240ms; }
+@keyframes aiBreathe {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(-3px); opacity: 1; }
+}
+
+@media (max-width: 520px) {
+  .ai-panel {
+    right: 12px;
+    left: 12px;
+    width: auto;
+    height: min(70vh, calc(100dvh - 84px - 110px));
+    bottom: 82px;
+  }
+}
+</style>
 
 
 
 
   <!-- Header Section -->
-  <header>
-    <div class="container">
-      <h2>
-        <img src="https://i.pinimg.com/1200x/da/9d/1e/da9d1e109b5103e9f5e490d1dcfa75be.jpg" alt="logo" height="50" width="50">
-        Travel Itinerary Planner
-      </h2>
-      <nav>
-  <ul>
-    <li><a href="#explore" data-label="Explore Trips">Explore</a></li>
-    <li><a href="login.html" data-label="Access Your Account">Login/SignUp</a></li>
-  </ul>
-</nav>
+  <!-- Premium Navbar -->
+  <header class="nav" data-open="false">
+    <div class="nav__inner">
+      <!-- Logo (image + brand text) -->
+      <a class="brand" href="index.html" aria-label="Utkal Darshan Home">
+        <img
+          class="brand__logo"
+          src="https://i.pinimg.com/1200x/da/9d/1e/da9d1e109b5103e9f5e490d1dcfa75be.jpg"
+          alt="Utkal Darshan Logo"
+        />
+        <span class="brand__text">
+          <span class="brand__name">Utkal Darshan</span>
+          <span class="brand__tagline">Premium Odisha Travel</span>
+        </span>
+      </a>
 
+      <!-- Mobile hamburger -->
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <!-- Simple hamburger icon (pure HTML/CSS) -->
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <!-- Right-side navigation -->
+      <nav class="nav__menu" aria-label="Primary navigation">
+        <ul class="nav__links">
+          <li><a class="nav__link" href="#explore">Explore</a></li>
+          <li><a class="nav__link" href="trip_guidance.html">Destinations</a></li>
+          <li><a class="nav__link" href="hotel.html">Hotels</a></li>
+          <li><a class="nav__link" href="ContactUs.html">Contact</a></li>
+        </ul>
+        <!-- Stylish CTA button -->
+        <!-- Opens modal (no navigation) -->
+        <a class="nav__cta" href="#" data-open-auth="true">Login / Sign Up</a>
+        <!-- Logout appears only when logged in -->
+        <button class="nav__logout" id="logoutBtn" type="button" style="display:none;">
+          Logout
+        </button>
+      </nav>
     </div>
   </header>
 
@@ -482,27 +1220,18 @@ nav ul li a::after {
 
 
 
-
-
   <!-- Travel Picks -->
   <section id="explore" class="travel-inspiration">
-    <br>
-    <br>
-    <br>
     <h2>Odisha Travel Picks</h2>
     <p>Explore the most iconic destinations in Odisha through our community recommendations.</p>
-
-    <section id="explore" class="travel-inspiration">
-  <!-- rest of your cards -->
-</section>
     <div class="travel-cards">
       <!-- Card 1 -->
       <div class="travel-card">
-        <a href="temple.html">
+        <a href="temple.html" data-auth-preview="true">
           <img src="https://media.istockphoto.com/id/1069137628/photo/top-of-the-jagannath-temple-puri-odisha-india.jpg?s=612x612&w=0&k=20&c=QIj54CAlnD_CKzb1roAVms9f2fdWnqwOb3BMSMvbee4=" alt="Jagannath Temple">
         </a>
         <div class="travel-info">
-          <a href="temple.html"><h3>Jagannath Temple</h3></a>
+          <a href="temple.html" data-auth-preview="true"><h3> Temple </h3></a>
           <p>Discover the spiritual richness of Puri through this sacred temple visit, rituals, and beach walks.</p>
           
         </div>
@@ -512,12 +1241,12 @@ nav ul li a::after {
 
       <!-- Card 2 -->
       <div class="travel-card">
-        <a href="dhauli.html">
+        <a href="dhauli.html" data-auth-preview="true">
           <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Dhauli-Giri-Shanti-Stupa-Bhubaneswar-Orissa.jpg" alt="Dhauli Stupa">
           
         </a>
         <div class="travel-info">
-          <h3>Dhauli Peace Tour</h3>
+          <h3>Peace Tour</h3>
           <p>Explore ancient Buddhist heritage and peaceful vibes at Bhubaneswar’s Dhauli Giri Stupa.</p>
           
         </div>
@@ -525,11 +1254,11 @@ nav ul li a::after {
 
       <!-- Card 3 -->
       <div class="travel-card">
-        <a href="Waterfall.html">
+        <a href="Waterfall.html" data-auth-preview="true">
           <img src="https://taxilotrip.com/uploads/0000/312/2024/07/10/picture4.jpg" alt="Waterfall">
         </a>
         <div class="travel-info">
-          <h3>Hidden Waterfalls</h3>
+          <h3>Hidden Waterfalls & Cave</h3>
           <p>Enjoy a thrilling getaway to Odisha’s secret waterfalls, perfect for adventure lovers.</p>
         
         </div>
@@ -608,7 +1337,7 @@ nav ul li a::after {
       <div class="footer-about">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIaKH86aUbnqpKmfPxSvhDpztDPEWFUTeTDaWO0OzfoQMXVlYfvvAw3kHobNIBcP1DOw0&usqp=CAU" alt="logo" class="footer-logo" />
         <h3>Trip Planner</h3>
-        <p>Turn your next trip into a hassle-free experience with Travel Itinerary Planner</p>
+        <p>Turn your next trip into a hassle-free experience with  Odisha Travel Itinerary Planner</p>
       </div>
 
       <div class="footer-links">
@@ -634,5 +1363,470 @@ nav ul li a::after {
     </div>
   </footer>
 
+  <!-- Utkal Darshan AI Travel Assistant (Odisha-only) -->
+  <!-- Auth Modal (Login / Signup) -->
+  <div class="auth-overlay" data-open="false" aria-hidden="true">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-label="Login or Sign up">
+      <div class="auth-head">
+        <div>
+          <h3>Login / Sign Up</h3>
+          <p>Welcome to Utkal Darshan. Continue to explore Odisha.</p>
+        </div>
+        <button class="auth-close" type="button" aria-label="Close login popup">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="auth-body">
+        <!-- Shows when user is blocked from booking -->
+        <div class="auth-alert" data-show="false">Please login to continue booking.</div>
+
+        <!-- Fields used for backend auth -->
+        <div class="auth-field">
+          <div class="auth-label">Email</div>
+          <input class="auth-input" id="authEmail" type="email" placeholder="you@example.com" />
+        </div>
+        <div class="auth-field">
+          <div class="auth-label">Password</div>
+          <input class="auth-input" id="authPassword" type="password" placeholder="••••••••" />
+        </div>
+
+        <div class="auth-actions">
+          <button class="auth-btn auth-btn--gold" type="button" data-auth-action="login">Login</button>
+          <button class="auth-btn" type="button" data-auth-action="signup">Sign Up</button>
+        </div>
+
+        <!-- (Tip removed as requested) -->
+      </div>
+    </div>
+  </div>
+
+  <button class="ai-fab" type="button" aria-label="Open Utkal Darshan Travel Assistant" title="Ask Utkal Darshan Assistant">
+    <!-- Chat icon -->
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M7 8h10M7 12h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M21 12a8 8 0 0 1-8 8H8l-5 3 1.6-4.8A8 8 0 1 1 21 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <section class="ai-panel" data-open="false" aria-label="Utkal Darshan AI Travel Assistant">
+    <div class="ai-header">
+      <div class="ai-title">
+        <span class="ai-badge" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l2.4 6.2L21 9l-5 4 1.6 6.8L12 16.8 6.4 19.8 8 13.1 3 9l6.6-.8L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <div>
+          <h4>Utkal Darshan Assistant</h4>
+          <p>Ask me about Odisha travel plans</p>
+        </div>
+      </div>
+      <button class="ai-close" type="button" aria-label="Close assistant">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="ai-messages" aria-live="polite"></div>
+
+    <!-- Quick prompts (tap to ask) -->
+    <div class="ai-hintbar" aria-label="Quick questions">
+      <button class="ai-chip" type="button" data-prompt="Suggest a 2-day trip plan in Odisha">2-day plan</button>
+      <button class="ai-chip" type="button" data-prompt="Best places to visit near Puri?">Near Puri</button>
+      <button class="ai-chip" type="button" data-prompt="Recommend hotels in Bhubaneswar (budget/mid/luxury)">Hotels</button>
+      <button class="ai-chip" type="button" data-prompt="What local Odia food should I try?">Odia food</button>
+    </div>
+
+    <form class="ai-inputbar" autocomplete="off">
+      <input class="ai-input" type="text" placeholder="Ask about Odisha trip planning, hotels, food..." />
+      <button class="ai-send" type="submit">Send</button>
+    </form>
+  </section>
+
+  <script>
+    // Mobile menu toggle (minimal JS)
+    (function () {
+      const nav = document.querySelector(".nav");
+      const toggle = document.querySelector(".nav__toggle");
+      const links = document.querySelectorAll(".nav__link, .nav__cta");
+
+      if (!nav || !toggle) return;
+
+      const setOpen = (open) => {
+        nav.dataset.open = open ? "true" : "false";
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      };
+
+      toggle.addEventListener("click", () => {
+        const isOpen = nav.dataset.open === "true";
+        setOpen(!isOpen);
+      });
+
+      // Close menu after clicking a link (mobile UX)
+      links.forEach((a) => a.addEventListener("click", () => setOpen(false)));
+
+      // Close on Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setOpen(false);
+      });
+    })();
+
+    // =========================================
+    // Auth modal (Login / Signup) + restriction logic
+    // - Frontend-only demo using localStorage
+    // - Hook backend later where marked below
+    // =========================================
+    (function () {
+      const KEY = "isLoggedIn";
+      const overlay = document.querySelector(".auth-overlay");
+      const closeBtn = document.querySelector(".auth-close");
+      const alertBox = document.querySelector(".auth-alert");
+      const openAuthBtn = document.querySelector('[data-open-auth="true"]');
+      // Booking-only restriction:
+      // Add data-booking="true" to any "Book Now" button/link across the site.
+      const bookingTriggers = document.querySelectorAll('[data-booking="true"]');
+      // Destination cards: show optional modal first, then navigate after close
+      const destinationTriggers = document.querySelectorAll('[data-auth-preview="true"]');
+      const actionBtns = document.querySelectorAll("[data-auth-action]");
+      const logoutBtn = document.querySelector("#logoutBtn");
+
+      if (!overlay || !closeBtn || !alertBox) return;
+
+      let pendingUrl = null;
+      let pendingMode = "none"; // "none" | "booking" | "preview"
+
+      const isLoggedIn = () => localStorage.getItem(KEY) === "true";
+
+      const updateAuthUI = () => {
+        const logged = isLoggedIn();
+        if (openAuthBtn) openAuthBtn.style.display = logged ? "none" : "inline-flex";
+        if (logoutBtn) logoutBtn.style.display = logged ? "inline-flex" : "none";
+      };
+
+      const openModal = ({ message = "", url = null, mode = "none" } = {}) => {
+        pendingUrl = url || pendingUrl;
+        pendingMode = mode || pendingMode;
+        overlay.dataset.open = "true";
+        overlay.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+        alertBox.textContent = message || "Please login to continue booking";
+        alertBox.dataset.show = message ? "true" : "false";
+      };
+
+      const closeModal = () => {
+        overlay.dataset.open = "false";
+        overlay.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+        alertBox.dataset.show = "false";
+
+        // If this was an optional preview modal for destinations, continue navigation on close.
+        if (pendingMode === "preview" && pendingUrl) {
+          const next = pendingUrl;
+          pendingUrl = null;
+          pendingMode = "none";
+          window.location.href = next;
+          return;
+        }
+
+        // Otherwise just reset pending state
+        pendingUrl = null;
+        pendingMode = "none";
+      };
+
+      window.addEventListener("load", () => {
+        updateAuthUI();
+      });
+
+      // Open from navbar CTA
+      if (openAuthBtn) {
+        openAuthBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          openModal({ mode: "none" });
+        });
+      }
+
+      // Close behaviors
+      closeBtn.addEventListener("click", closeModal);
+      overlay.addEventListener("click", (e) => {
+        // Click outside modal closes; inside does not
+        if (e.target === overlay) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      // Restrict booking actions only
+      bookingTriggers.forEach((el) => {
+        el.addEventListener("click", (e) => {
+          if (isLoggedIn()) return;
+          e.preventDefault();
+          const href = el.getAttribute("href");
+          openModal({ message: "Please login to continue booking", url: href, mode: "booking" });
+        });
+      });
+
+      // Destination cards: optional login prompt (does NOT block content)
+      destinationTriggers.forEach((a) => {
+        a.addEventListener("click", (e) => {
+          if (isLoggedIn()) return; // skip popup next time if already logged in
+          e.preventDefault();
+          openModal({
+            message: "Login to enhance your experience (optional)",
+            url: a.getAttribute("href"),
+            mode: "preview",
+          });
+        });
+      });
+
+      // Login / Signup (backend)
+      actionBtns.forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const action = btn.getAttribute("data-auth-action");
+
+          const emailEl = document.querySelector("#authEmail");
+          const passEl = document.querySelector("#authPassword");
+          const email = (emailEl?.value || "").trim();
+          const password = (passEl?.value || "").trim();
+
+          if (!email || !password) {
+            openModal({ message: "Please enter email and password.", mode: pendingMode, url: pendingUrl });
+            return;
+          }
+
+          // Backend hook (Spring Boot):
+          // - POST http://localhost:8080/login
+          // - POST http://localhost:8080/register
+          const endpoint = action === "signup" ? "/register" : "/login";
+          const payload =
+            action === "signup"
+              ? { name: email.split("@")[0] || "User", email, password }
+              : { email, password };
+
+          // IMPORTANT: Backend is running on port 8081 (see application.properties)
+          const API_BASE = "http://localhost:8081";
+
+          try {
+            const res = await fetch(API_BASE + endpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || data.success === false) {
+              const msg = data?.message || "Login failed. Please try again.";
+              openModal({ message: msg, mode: pendingMode, url: pendingUrl });
+              return;
+            }
+
+            // Store login state + token (bonus JWT)
+            localStorage.setItem(KEY, "true");
+            if (data.token) localStorage.setItem("token", data.token);
+            updateAuthUI();
+            closeModal();
+          } catch (err) {
+            openModal({ message: "Server not reachable. Please start backend.", mode: pendingMode, url: pendingUrl });
+            return;
+          }
+
+          // Continue to the originally requested page (if any)
+          if (pendingUrl) {
+            const next = pendingUrl;
+            pendingUrl = null;
+            pendingMode = "none";
+            window.location.href = next;
+          }
+        });
+      });
+
+      // Logout
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          localStorage.removeItem(KEY);
+          localStorage.removeItem("token");
+          updateAuthUI();
+          // Browsing is allowed without login; no popup on logout.
+        });
+      }
+    })();
+
+    // =========================================
+    // Utkal Darshan AI Travel Assistant (Odisha-only)
+    // - Short, friendly replies (2–5 lines)
+    // - Keyword-based intent matching (no backend)
+    // =========================================
+    (function () {
+      const fab = document.querySelector(".ai-fab");
+      const panel = document.querySelector(".ai-panel");
+      const closeBtn = document.querySelector(".ai-close");
+      const form = document.querySelector(".ai-inputbar");
+      const input = document.querySelector(".ai-input");
+      const messages = document.querySelector(".ai-messages");
+      const chips = document.querySelectorAll(".ai-chip");
+
+      if (!fab || !panel || !closeBtn || !form || !input || !messages) return;
+
+      const setOpen = (open) => {
+        panel.dataset.open = open ? "true" : "false";
+        if (open) setTimeout(() => input.focus(), 50);
+      };
+
+      const addMessage = (who, text) => {
+        const wrap = document.createElement("div");
+        wrap.className = `ai-msg ai-msg--${who}`;
+        const bubble = document.createElement("div");
+        bubble.className = "ai-msg__bubble";
+        bubble.textContent = text;
+        wrap.appendChild(bubble);
+        messages.appendChild(wrap);
+        // Smooth scroll to newest message
+        messages.scrollTo({ top: messages.scrollHeight, behavior: "smooth" });
+        return wrap;
+      };
+
+      const showTyping = () => {
+        const wrap = document.createElement("div");
+        wrap.className = "ai-msg ai-msg--bot";
+        wrap.dataset.typing = "true";
+        const bubble = document.createElement("div");
+        bubble.className = "ai-msg__bubble";
+        bubble.innerHTML =
+          '<span class="ai-typing" aria-label="Assistant is typing">' +
+          '<span class="ai-dot"></span><span class="ai-dot"></span><span class="ai-dot"></span>' +
+          "</span>";
+        wrap.appendChild(bubble);
+        messages.appendChild(wrap);
+        messages.scrollTo({ top: messages.scrollHeight, behavior: "smooth" });
+      };
+
+      const hideTyping = () => {
+        const t = messages.querySelector('[data-typing="true"]');
+        if (t) t.remove();
+      };
+
+      // Basic Odisha focus guard (keeps assistant on-topic)
+      const looksUnrelated = (t) => {
+        const s = t.toLowerCase();
+        const odishaSignals = ["odisha", "puri", "konark", "chilika", "bhubaneswar", "cuttack", "rourkela", "sambalpur", "jagannath", "dhauli", "utkal"];
+        const hasOdisha = odishaSignals.some((k) => s.includes(k));
+        // If user asks general travel but doesn't mention Odisha, politely steer them
+        const travelWords = ["trip", "travel", "itinerary", "hotel", "route", "places", "food", "plan", "budget", "visit"];
+        const isTravel = travelWords.some((k) => s.includes(k));
+        return isTravel && !hasOdisha;
+      };
+
+      const reply = (userText) => {
+        const t = (userText || "").trim();
+        const s = t.toLowerCase();
+        if (!t) return "Tell me what you want in Odisha: places, hotels, food, or a 1–3 day plan.";
+
+        if (looksUnrelated(t)) {
+          return "I can help with Odisha travel only.\nTell me your starting city and number of days.";
+        }
+
+        // Greetings / small talk
+        if (/(^|\b)(hi|hello|hey|good morning|good evening)(\b|$)/i.test(s)) {
+          return "Hi! I’m your Utkal Darshan assistant.\nWhich city in Odisha are you visiting, and for how many days?";
+        }
+
+        // 1-day / 2-day / 3-day itinerary
+        if (s.includes("1 day") || s.includes("one day") || s.includes("day trip")) {
+          return "1-day plan:\nBhubaneswar temples → Dhauli → Ekamra Haat.\nWant a Puri-based day plan?";
+        }
+        if (s.includes("2 day") || s.includes("two day") || s.includes("2-day")) {
+          return "2-day plan:\nDay 1: Puri (Jagannath + beach).\nDay 2: Konark + Chandrabhaga.\nWant hotels in Puri?";
+        }
+        if (s.includes("3 day") || s.includes("three day") || s.includes("3-day")) {
+          return "3-day plan:\nDay 1: Bhubaneswar + Dhauli.\nDay 2: Puri.\nDay 3: Konark (+ Chilika if time).";
+        }
+
+        // Budget planning
+        if (s.includes("budget") || s.includes("cheap") || s.includes("low cost")) {
+          return "Budget tips:\nUse buses/shared autos, eat local, stay in budget lodges.\nTell me budget + days.";
+        }
+
+        // Tourist places
+        if (s.includes("place") || s.includes("places") || s.includes("visit") || s.includes("destination")) {
+          return "Top picks:\nPuri, Konark, Chilika Lake, Bhubaneswar (Dhauli).\nWhere are you starting from?";
+        }
+
+        // Hotels (budget/mid/luxury) — keep generic but useful
+        if (s.includes("hotel") || s.includes("stay") || s.includes("resort")) {
+          const city =
+            (s.includes("puri") && "Puri") ||
+            (s.includes("bhubaneswar") && "Bhubaneswar") ||
+            (s.includes("konark") && "Konark") ||
+            (s.includes("cuttack") && "Cuttack") ||
+            "";
+          const where = city ? `in ${city}` : "in your city";
+          return `Hotels ${where}:\nBudget: guest house.\nMid: 3-star.\nLuxury: premium/resort.\nTell me your budget range.`;
+        }
+
+        // Food recommendations
+        if (s.includes("food") || s.includes("eat") || s.includes("dish") || s.includes("cuisine")) {
+          return "Must-try Odia food:\nDalma, Pakhala Bhata, Chhena Poda, Rasagola.\nVeg-only or street-food?";
+        }
+
+        // Routes / transport
+        if (s.includes("route") || s.includes("how to go") || s.includes("travel from") || s.includes("distance") || s.includes("train") || s.includes("bus")) {
+          return "Tell me start → destination (e.g., Bhubaneswar → Puri).\nI’ll suggest the easiest train/bus/taxi.";
+        }
+
+        // Booking / help
+        if (s.includes("book") || s.includes("booking") || s.includes("how to") || s.includes("help") || s.includes("confused")) {
+          return "I can guide you step-by-step.\nTell me your days + starting city in Odisha.";
+        }
+
+        // Fallback (polite + honest)
+        return "I’m not sure, but I can help you explore options.\nTell me your city, days, and interests (temples/beach/nature/food).";
+      };
+
+      // Open/close behavior
+      fab.addEventListener("click", () => {
+        const isOpen = panel.dataset.open === "true";
+        setOpen(!isOpen);
+      });
+      closeBtn.addEventListener("click", () => setOpen(false));
+
+      // Close on Escape
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setOpen(false);
+      });
+
+      // Quick prompt chips
+      chips.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const p = btn.getAttribute("data-prompt") || "";
+          input.value = p;
+          input.focus();
+        });
+      });
+
+      // Submit handler
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const userText = input.value.trim();
+        if (!userText) return;
+        addMessage("user", userText);
+        input.value = "";
+        showTyping();
+        const botText = reply(userText);
+        // Small delay so chat feels alive
+        const delay = Math.min(900, Math.max(350, botText.length * 10));
+        setTimeout(() => {
+          hideTyping();
+          addMessage("bot", botText);
+        }, delay);
+      });
+
+      // Welcome message (once)
+      addMessage("bot", "Hello! I’m Utkal Darshan Assistant.\nTell me your starting city in Odisha and how many days you have.");
+    })();
+  </script>
 </body>
 </html>
